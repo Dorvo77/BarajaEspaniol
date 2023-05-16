@@ -1,6 +1,5 @@
 package service;
 
-import entidades.Baraja;
 import entidades.Carta;
 import enums.Palo;
 
@@ -29,16 +28,18 @@ public class BarajaService {
     }
 
     public void mostrarBaraja(ArrayList<Carta> barajas) {
-        int line=1;
-        for (Carta carta: barajas) {
-            System.out.print(carta+" ");
-            if(line==10 || line==20 || line == 30){
-                System.out.println("");
+        int line = 1;
+        for (Carta carta : barajas) {
+            System.out.print(carta + " ");
+            if (line == 10 || line == 20 || line == 30) {
+                System.out.println();
             }
             line++;
         }
+        if (!(barajas.size() > 0)) {
+            System.out.println("Las cartas del monton está vacio. ");
+        }
     }
-
 
     public void menu(ArrayList<Carta> barajas) {
         int op;
@@ -53,37 +54,28 @@ public class BarajaService {
             System.out.println("7. Salir");
             System.out.print("Ingrese Opcion: >_ ");
             op = sc.nextInt();
-            switch (op){
-                case 1:
-                    mostrarBaraja(barajas);
-                    break;
-                case 2:
-                    Collections.shuffle(barajas);
-                    break;
-                case 3:
-                    if(disponibles(barajas)){
-                        System.out.println("Siguiente carta -> "+barajas.get(0));
-                }else {
-                    System.out.println("No hay mas cartas disponibles # Baraja en CERO.");
+            switch (op) {
+                case 1 -> mostrarBaraja(barajas);
+                case 2 -> Collections.shuffle(barajas);
+                case 3 -> {
+                    if (disponibles(barajas)) {
+                        System.out.println("Siguiente carta -> " + barajas.get(0));
+                    } else {
+                        System.out.println("No hay mas cartas disponibles # Baraja en CERO.");
+                    }
                 }
-                    break;
-                case 4:
-                    System.out.println("Quedan "+barajas.size()+" cartas disponibles");
-                    System.out.println("Tamanio mayor 0?? >_"+disponibles(barajas));
-                    break;
-                case 5:
+                case 4 -> {
+                    System.out.println("Quedan " + barajas.size() + " cartas disponibles");
+                    System.out.println("Tamanio mayor 0?? >_" + disponibles(barajas));
+                }
+                case 5 -> {
                     System.out.print("Ingrese la cantidad de cartas a repartir: >_");
                     int cantidad = sc.nextInt();
                     darCartas(barajas, cantidad);
-                    break;
-                case 6:
-                    mostrarBaraja(montones);
-                    break;
-                case 7:
-                    System.out.println("Saliendooo...");
-                    break;
-                default:
-                    System.out.println("Ingrese opcion valida");
+                }
+                case 6 -> mostrarBaraja(montones);
+                case 7 -> System.out.println("Saliendooo...");
+                default -> System.out.println("Ingrese opcion valida");
             }
         }while(op!=7);
 
@@ -93,6 +85,10 @@ public class BarajaService {
 
         if(disponibles(barajas)) {
             ArrayList<Carta> cardDadas = new ArrayList<>();
+            if(cantidad> barajas.size()){
+                cantidad = barajas.size();
+                System.out.println("Se reparten "+cantidad+" cartas.");
+            }
             for (int i = 0; i < cantidad; i++) {
                 Carta aux = barajas.get(0);
                 montones.add(aux);
