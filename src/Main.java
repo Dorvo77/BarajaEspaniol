@@ -12,6 +12,7 @@ public class Main {
         ArrayList<Carta> barajas = new ArrayList<>();
         BarajaService bs = new BarajaService();
         bs.crearBaraja(barajas);
-        bs.mostrarBaraja(barajas);
+        bs.menu(barajas);
+
     }
 }
